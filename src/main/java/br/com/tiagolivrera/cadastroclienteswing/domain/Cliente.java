@@ -6,7 +6,7 @@ import java.util.Objects;
  *
  * @author thyago
  */
-public class Cliente {
+public class Cliente implements Comparable{
 
     private String nome;
     private Long cpf;
@@ -102,6 +102,18 @@ public class Cliente {
         }
         final Cliente other = (Cliente) obj;
         return Objects.equals(this.cpf, other.cpf);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Cliente conta = (Cliente) o;
+        if(this.getCpf() < conta.getCpf()) {
+            return -1;
+        }
+        if(this.getCpf() > conta.getCpf()) {
+            return 1;
+        }
+        return 0;
     }
 
 }
