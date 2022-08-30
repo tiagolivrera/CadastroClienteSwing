@@ -260,8 +260,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         if (isCadastrado) {
             modelo.addRow(new Object[]{cliente.getNome(), cliente.getCpf(),
-                                       cliente.getTelefone(), cliente.getEndereco(),
-                                       cliente.getNumero(), cliente.getCidade(), cliente.getEstado()});
+                cliente.getTelefone(), cliente.getEndereco(),
+                cliente.getNumero(), cliente.getCidade(), cliente.getEstado()});
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Cliente já se encontra cadastrado", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
@@ -300,13 +300,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
                 limparCampos();
             } else {
-                   JOptionPane.showMessageDialog(null, "Nenhum cliente selecionado", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nenhum cliente selecionado", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = tabelaClientes.getSelectedRow();
+
+        if (linhaSelecionada >= 0) {
+            int result = JOptionPane.showConfirmDialog(this, "Deseja realmente atualizar esse cliente?", "CUIDADO",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (result == JOptionPane.YES_OPTION) {
+                String nome = txtNome.getText();
+                Long cpf = (Long) tabelaClientes.getValueAt(linhaSelecionada, 1);
+                String endereco = txtEndereco.getText();
+                String numero = txtNumero.getText();
+                String telefone = txtTelefone.getText();
+                String cidade = txtCidade.getText();
+                String estado = txtEstado.getText();
+
+                Cliente clienteAtualizado = new Cliente(nome, cpf.toString(), telefone, endereco, numero, cidade, estado);
+                clienteDAO.alterar(clienteAtualizado);
+                // o cliente é atualizado na base de dados, mas não altera as informações na tabela.
+                modelo.removeRow(linhaSelecionada);
+                modelo.addRow(new Object[]{clienteAtualizado.getNome(), clienteAtualizado.getCpf(),
+                    clienteAtualizado.getTelefone(), clienteAtualizado.getEndereco(),
+                    clienteAtualizado.getNumero(), clienteAtualizado.getCidade(), clienteAtualizado.getEstado()});
+
+                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum cliente selecionado", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
