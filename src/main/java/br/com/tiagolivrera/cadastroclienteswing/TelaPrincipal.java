@@ -96,6 +96,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnAtualizar.setText("Atualizar");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -341,6 +346,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        int result = JOptionPane.showConfirmDialog(this, "Deseja realmente remover todos os clientes?", "CUIDADO",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            if (modelo.getRowCount() > 0) {
+                for (int i = modelo.getRowCount() -1; i > -1; i--) {
+                    Long cpf = (Long) modelo.getValueAt(i, 1);
+                    clienteDAO.excluir(cpf);
+                    modelo.removeRow(i);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Todos os clientes foram removidos", "SUCESSO", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
