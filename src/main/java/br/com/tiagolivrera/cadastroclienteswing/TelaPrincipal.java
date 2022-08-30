@@ -245,16 +245,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String nome = txtNome.getText();
         String cpf = txtCPF.getText();
+        String endereco = txtEndereco.getText();
+        String numero = txtNumero.getText();
+        String telefone = txtTelefone.getText();
+        String cidade = txtCidade.getText();
+        String estado = txtEstado.getText();
 
-        if (!isCamposValidos(nome, cpf)) {
+        if (!isCamposValidos(nome, cpf, endereco, numero, telefone, cidade, estado)) {
             JOptionPane.showMessageDialog(null, "Existem campos a serem preenchidos", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        Cliente cliente = new Cliente(nome, cpf, cpf, null, cpf, null, null);
+        Cliente cliente = new Cliente(nome, cpf, telefone, endereco, numero, cidade, estado);
         Boolean isCadastrado = this.clienteDAO.cadastrar(cliente);
 
         if (isCadastrado) {
-            modelo.addRow(new Object[]{cliente.getNome(), cliente.getCpf()});
+            modelo.addRow(new Object[]{cliente.getNome(), cliente.getCpf(),
+                                       cliente.getTelefone(), cliente.getEndereco(),
+                                       cliente.getNumero(), cliente.getCidade(), cliente.getEstado()});
             limparCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Cliente já se encontra cadastrado", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
@@ -385,5 +392,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void limparCampos() {
         txtNome.setText("");
         txtCPF.setText("");
+        txtTelefone.setText("");
+        txtEndereco.setText("");
+        txtNumero.setText("");
+        txtCidade.setText("");
+        txtEstado.setText("");
     }
 }
