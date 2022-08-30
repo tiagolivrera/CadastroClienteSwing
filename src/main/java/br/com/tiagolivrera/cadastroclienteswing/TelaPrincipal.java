@@ -277,6 +277,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         txtNome.setText(cliente.getNome());
         txtCPF.setText(cliente.getCpf().toString());
+        txtTelefone.setText(cliente.getTelefone().toString());
+        txtNumero.setText(cliente.getNumero().toString());
+        txtEndereco.setText(cliente.getEndereco());
+        txtCidade.setText(cliente.getCidade());
+        txtEstado.setText(cliente.getEstado());
     }//GEN-LAST:event_tabelaClientesMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
